@@ -52,26 +52,15 @@ void setup()
 
 void loop()
 {
-  digitalWrite(LAS, HIGH);
-
-  reading = analogRead(PHOTO);
-  prevRead = 0;
-  if (reading != prevRead)
+  if (reading > 38)
   {
-    Serial.printf("reading %i\n", reading);
-    prevRead = reading;
-    delay(1000);
-    if (reading > 7)
+    for (int i = 0; i < PIXELCOUNT; i++)
     {
-      Serial.printf("yellow");
-      for (int i = 0; i < PIXELCOUNT; i++)
-      {
-        pixel.setPixelColor(i, yellow);
-        pixel.show();
-      }
+      pixel.setPixelColor(i, yellow);
+      pixel.show();
     }
   }
-  if (reading < 7)
+  else
   {
     for (int i = 0; i < PIXELCOUNT; i++)
     {
@@ -79,4 +68,17 @@ void loop()
       pixel.show();
     }
   }
+  digitalWrite(LAS, HIGH);
+  reading = analogRead(PHOTO);
+  delay(10000);
+
+  // Serial.printf("read %i\n",reading);
+  // delay(2000);
+
+  digitalWrite(LAS, LOW);
+  reading = analogRead(PHOTO);
+  delay(10000);
+
+  // Serial.printf("read %i\n",reading);
+  // delay(2000);
 }
